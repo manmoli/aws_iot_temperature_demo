@@ -45,55 +45,41 @@ function createClient(ioTConfig: DeviceConfig): mqtt5.Mqtt5Client {
     let client: mqtt5.Mqtt5Client = new mqtt5.Mqtt5Client(config)
 
     client.on('error', (error: ICrtError) => {
-        console.log('******************************************************')
         console.log('Error event: ' + error.toString())
-        console.log('******************************************************')
     })
 
     client.on('messageReceived', (eventData: mqtt5.MessageReceivedEvent): void => {
-        console.log('******************************************************')
         console.log('Message received event: ' + JSON.stringify(eventData.message));
-        console.log('******************************************************')
     })
 
     client.on('attemptingConnect', (eventData: mqtt5.AttemptingConnectEvent) => {
-        console.log('******************************************************')
         console.log('attempting connect event');
-        console.log('******************************************************')
     })
 
     client.on('connectionSuccess', (eventData: mqtt5.ConnectionSuccessEvent) => {
-        console.log('******************************************************')
         console.log('Connection success event');
         console.log('Connack: ' + JSON.stringify(eventData.connack));
         console.log('Settings: ' + JSON.stringify(eventData.settings));
-        console.log('******************************************************')
 
     });
 
     client.on('connectionFailure', (eventData: mqtt5.ConnectionFailureEvent) => {
-        console.log('******************************************************')
         console.log("Connection failure event: " + eventData.error.toString());
         if (eventData.connack) {
             console.log("Connack: " + JSON.stringify(eventData.connack));
         }
-        console.log('******************************************************')
 
     });
 
     client.on('disconnection', (eventData: mqtt5.DisconnectionEvent) => {
-        console.log('******************************************************')
         console.log("Disconnection event: " + eventData.error.toString());
         if (eventData.disconnect !== undefined) {
             console.log('Disconnect packet: ' + JSON.stringify(eventData.disconnect));
         }
-        console.log('******************************************************')
     });
 
     client.on('stopped', (eventData: mqtt5.StoppedEvent) => {
-        console.log('******************************************************')
         console.log("Stopped event");
-        console.log('******************************************************')
     });
 
 
@@ -135,14 +121,8 @@ async function cleanup() {
         client.stop();
         await stopped;
         client.close();
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-        console.log('Finishing Cleaning up client connection');
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     }
 
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    console.log('Exiting app');
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     process.exit()
 }
 
