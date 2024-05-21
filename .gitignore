@@ -1,0 +1,4 @@
+.env
+/device_simulator/node_modules
+/device_simulator/certs
+ec2_microservice/node_modules
